@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.eventmoment.rahat.eventmoment.Model.Event;
 import com.eventmoment.rahat.eventmoment.Model.EventMoment;
 import com.eventmoment.rahat.eventmoment.R;
 
@@ -33,8 +34,7 @@ public class EventMomentActivity extends AppCompatActivity {
     Button takeMomentBtn;
     ImageView imageView;
     Button saveMomentBtn;
-    EventMoment eventMoment;
-
+    Event event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +54,7 @@ public class EventMomentActivity extends AppCompatActivity {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
+
             }catch (IOException e){
                 Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -92,9 +93,9 @@ public class EventMomentActivity extends AppCompatActivity {
 
             int scaleFactor=Math.min(photoW/targetW,photoH/targetH);
 
-            options.inJustDecodeBounds=false;
+            options.inJustDecodeBounds = false;
             options.inSampleSize=scaleFactor;
-            Toast.makeText(this, currentMomentPhotoPath, Toast.LENGTH_SHORT).show();
+
             bitmap=BitmapFactory.decodeFile(currentMomentPhotoPath,options);
             imageView.setImageBitmap(bitmap);
 
@@ -103,9 +104,12 @@ public class EventMomentActivity extends AppCompatActivity {
 
     public void saveMoment(View view) {
 
-        eventMoment.setMomentPhotoPath(this.currentMomentPhotoPath);
+        EventMoment eventMoment = new EventMoment();
+
+        eventMoment.setEventId(event.getEventId());
+        eventMoment.setMomentPhotoPath(currentMomentPhotoPath);
         eventMoment.setTitle(momentTitle.getText().toString());
-        eventMoment.setTitle(momentTitle.getText().toString());
+        eventMoment.setDescription(momentDescription.getText().toString());
 
         Intent intent = new Intent(EventMomentActivity.this,MomentViewActivity.class);
         intent.putExtra("eventMoment",eventMoment);

@@ -14,6 +14,9 @@ public class EventMoment implements Serializable {
     private String Description;
     private String momentPhotoPath;
 
+    public EventMoment() {
+
+    }
     public EventMoment(int momentId, Event eventId, String title, String description, String momentPhotoPath) {
         this.momentId = momentId;
         this.eventId = eventId;
@@ -41,7 +44,7 @@ public class EventMoment implements Serializable {
         return eventId;
     }
 
-    public void setEventId(Event eventId) {
+    public void setEventId(int eventId) {
         this.eventId = eventId;
     }
 
